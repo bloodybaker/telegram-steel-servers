@@ -13,17 +13,72 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MyPaymentBot extends TelegramLongPollingBot {
-    private List<String> arrayList = new ArrayList();
+    public List<String> arrayTest = new ArrayList();
+    public List<String> arrayVip = new ArrayList();
+    public List<String> arrayVipTemp = new ArrayList();
+    public List<String> arrayMvp = new ArrayList();
+    public List<String> arrayMvpTemp = new ArrayList();
     private final static String BOT_TOKEN = "1006785577:AAHOQ_utD3wHt1NR7miLqDlS64JGMv7J8cw";
     private final static String PROVIDER_TOKEN = "635983722:LIVE:i20043681521";
     private int variant;
+    public int t = 0, v = 0, vm = 0, m = 0, mm = 0;
     public void onUpdateReceived(Update update) {
 
         System.out.println("Message received: " + update);
         Message message = update.getMessage();
+        if(update.hasMessage()){
+        String s = update.getMessage().toString();
+        String[] words = s.split("\\s+");
+        for (int i = 0; i < words.length; i++) {
+            words[i] = words[i].replaceAll("[^\\w]", "");
+        }
+        System.out.println(Arrays.toString(words));
+        for (int i = 0; i < words.length; i++){
+            if (words[i].equals(" successfulPaymentSuccessfulPaymentcurrencyUAH") || words[i].equals("successfulPaymentSuccessfulPaymentcurrencyUAH")
+                    || words[i] == " successfulPaymentSuccessfulPaymentcurrencyUAH" || words[i] == "successfulPaymentSuccessfulPaymentcurrencyUAH" ){
+                if(words[i].equals(" totalAmount100") || words[i].equals("totalAmount100") || words[i] == " totalAmount100" || words[i] == "totalAmount100"){
+                    sendMess(message," Благодарим за покупку. Вот ваш ключ:\n"+
+                            "```" + arrayTest.get(t) + "```" + "\n" +
+                            "Информация по активации: /faq"
+                    );
+                    t++;
+                }
+                if(words[i].equals(" totalAmount2500") || words[i].equals("totalAmount2500") || words[i] == " totalAmount2500" || words[i] == "totalAmount2500"){
+                    sendMess(message," Благодарим за покупку. Вот ваш ключ:\n"+
+                            "```" + arrayVipTemp.get(vm) + "```" + "\n" +
+                            "Информация по активации: /faq"
+                    );
+                    vm++;
+                }
+                if(words[i].equals(" totalAmount5000") || words[i].equals("totalAmount5000") || words[i] == " totalAmount5000" || words[i] == "totalAmount5000"){
+                    sendMess(message," Благодарим за покупку. Вот ваш ключ:\n"+
+                            "```" + arrayVip.get(v) + "```" + "\n" +
+                            "Информация по активации: /faq"
+                    );
+                    v++;
+                }
+                if(words[i].equals(" totalAmount4000") || words[i].equals("totalAmount4000") || words[i] == " totalAmount4000" || words[i] == "totalAmount4000"){
+                    sendMess(message," Благодарим за покупку. Вот ваш ключ:\n"+
+                            "```" + arrayMvpTemp.get(mm) + "```" + "\n" +
+                            "Информация по активации: /faq"
+                    );
+                    mm++;
+                }
+                if(words[i].equals(" totalAmount8000") || words[i].equals("totalAmount8000") || words[i] == " totalAmount8000" || words[i] == "totalAmount8000"){
+                    sendMess(message," Благодарим за покупку. Вот ваш ключ:\n"+
+                            "```" + arrayMvp.get(m) + "```" + "\n" +
+                            "Информация по активации: /faq"
+                    );
+                    m++;
+                }
+                System.out.println("Успех");
+                }
+            }
+        }
         if (update.hasMessage() && update.getMessage().hasText()) {
             if(message.getText().equals("/start")){
                 sendMess(message," Здравствуйте, "  + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + ".\n" +
@@ -33,6 +88,7 @@ public class MyPaymentBot extends TelegramLongPollingBot {
                         "/methods - методы оплаты\n" +
                         "/info - информация о проекте и методы получения товара\n" +
                         "/contact - контакты продавца");
+                executeData();
             }
             if(message.getText().equals("/buy")){
                 sendMess(message," Здравствуйте, "  + message.getFrom().getFirstName() + " " + message.getFrom().getLastName() + ".\n" +
@@ -67,10 +123,7 @@ public class MyPaymentBot extends TelegramLongPollingBot {
                 sendInvoice(update);
             }
             if (update.getMessage().hasSuccessfulPayment()) {
-                sendMess(message," Благодарим за покупку. Вот ваш ключ:\n"+
-                    "```" + arrayList.get(0) + "```" + "\n" +
-                        "Информация по активации: /faq"
-                );
+
             }
 
         } else if (update.hasShippingQuery()) {
@@ -83,13 +136,23 @@ public class MyPaymentBot extends TelegramLongPollingBot {
         }
     }
     public void executeData(){
-        arrayList.add("6Qfwh6Rz6dwHnla80qN8Cx7dke5JK09m");
+       arrayMvp.add("oiuhoashdkjhkjhkjhuikhj");
+       arrayMvp.add("ovbf985409iuhoashdkjhkjhkjhuikhj");
+       arrayMvpTemp.add("oiuh650982hddfgjhuikhj");
+       arrayMvpTemp.add("oiuhlkjnsahkjhuikhj");
+       arrayVip.add("oiuho0987hkjhuikhj");
+       arrayVip.add("oiuho2349098kjhkjhkjhuikhj");
+       arrayVipTemp.add("oiuho76082dkjhkjhkjhuikhj");
+       arrayVipTemp.add("oiuhoash35345jhkjhkjhuikhj");
+       arrayTest.add("oiuhoashdkjh787jhuikhj");
+       arrayTest.add("blkjsa21344545j");
     }
     public void sendMess(Message message, String  string){
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId());
         sendMessage.setText(string);
+
         try {
             execute(sendMessage);
         } catch (TelegramApiException e) {
@@ -97,13 +160,6 @@ public class MyPaymentBot extends TelegramLongPollingBot {
         }
     }
 
-    public List<String> getArrayList() {
-        return arrayList;
-    }
-
-    public void setArrayList(List<String> arrayList) {
-        this.arrayList = arrayList;
-    }
 
     public void setVariant(int variant) {
         this.variant = variant;
@@ -148,7 +204,7 @@ public class MyPaymentBot extends TelegramLongPollingBot {
             sendInvoiceObject.setNeedPhoneNumber(true);
             sendInvoiceObject.setNeedEmail(true);
             sendInvoiceObject.setFlexible(true);
-
+            sendInvoiceObject.setNeedShippingAddress(false);
             try {
                 sendInvoice(sendInvoiceObject);
             } catch (TelegramApiException e) {
@@ -177,6 +233,7 @@ public class MyPaymentBot extends TelegramLongPollingBot {
             sendInvoiceObject.setNeedPhoneNumber(true);
             sendInvoiceObject.setNeedEmail(true);
             sendInvoiceObject.setFlexible(true);
+            sendInvoiceObject.setNeedShippingAddress(false);
 
             try {
                 sendInvoice(sendInvoiceObject);
@@ -305,13 +362,6 @@ public class MyPaymentBot extends TelegramLongPollingBot {
         try {
             answerPreCheckoutQuery(preCheckoutQuery);
             Message message = update.getMessage();
-            message.getSuccessfulPayment();
-            if (message.getSuccessfulPayment().equals(true)){
-                sendMess(message," Благодарим за покупку. Вот ваш ключ:\n"+
-                        "```" + "КУКУМБЕР" + "```" + "\n" +
-                        "Информация по активации: /faq"
-                );
-            }
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

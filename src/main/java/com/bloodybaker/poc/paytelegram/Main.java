@@ -17,7 +17,6 @@ public class Main {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-        MyPaymentBot myPaymentBot = new MyPaymentBot();
 
     }
 
